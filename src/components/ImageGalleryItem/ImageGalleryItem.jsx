@@ -1,15 +1,27 @@
 import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
 
-const ImageGalleryItem = ({ otherProperties, onOpenModal }) => {
+import { useState } from 'react';
+
+import Modal from 'components/Modal/Modal';
+
+const ImageGalleryItem = ({ otherProperties }) => {
+  const [showModal, setShowModal] = useState(false);
   const { tags, webformatURL, largeImageURL } = otherProperties;
 
-  const handleClick = () => {
-    onOpenModal(largeImageURL);
+  const toggleModal = () => {
+    setShowModal(prevShowModal => !prevShowModal);
   };
 
   return (
     <GalleryItem>
-      <GalleryItemImage src={webformatURL} alt={tags} onClick={handleClick} />
+      <GalleryItemImage src={webformatURL} alt={tags} onClick={toggleModal} />
+      {showModal && (
+        <Modal
+          selectedImage={largeImageURL}
+          text={tags}
+          onClose={toggleModal}
+        />
+      )}
     </GalleryItem>
   );
 };

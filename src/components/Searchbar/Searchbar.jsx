@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { FaRegGrinBeam } from 'react-icons/fa';
 
@@ -11,32 +11,35 @@ import {
 } from './Searchbar.styled';
 
 const Searchbar = ({ enterNewSearchValue }) => {
-  const handleSubmit = (values, { resetForm }) => {
-    const formattedInput = values.input.toLowerCase().trim();
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      input: '',
+    },
+  });
+  const handleSubmitForm = data => {
+    const formattedInput = data.input.toLowerCase().trim();
     if (formattedInput === '') {
       toast.info('Request cannot be empty');
       return;
     }
     enterNewSearchValue(formattedInput);
-    resetForm();
+    reset();
   };
 
   return (
     <SearchBar>
-      <Formik initialValues={{ input: '' }} onSubmit={handleSubmit}>
-        <SearchForm>
-          <SearchFormButton type="submit">
-            <FaRegGrinBeam size={20} />
-            <Label>Search</Label>
-          </SearchFormButton>
+      <SearchForm onSubmit={handleSubmit(handleSubmitForm)}>
+        <SearchFormButton type="submit">
+          <FaRegGrinBeam size={20} />
+          <Label>Search</Label>
+        </SearchFormButton>
 
-          <Input
-            name="input"
-            type="text"
-            placeholder="Search images and photos"
-          />
-        </SearchForm>
-      </Formik>
+        <Input
+          {...register('input')}
+          type="text"
+          placeholder="Search images and photos"
+        />
+      </SearchForm>
     </SearchBar>
   );
 };

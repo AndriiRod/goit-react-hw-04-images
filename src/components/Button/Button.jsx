@@ -1,8 +1,8 @@
 import { ButtonLM } from './Button.styled';
 
-const LoadMoreBtn = ({ handleClick }) => {
+const LoadMoreBtn = ({ huddlerCLick }) => {
   return (
-    <ButtonLM type="button" onClick={handleClick}>
+    <ButtonLM type="button" onClick={huddlerCLick}>
       Load more
     </ButtonLM>
   );
