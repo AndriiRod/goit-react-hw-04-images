@@ -10,6 +10,7 @@ const Modal = ({ selectedImage, onClose }) => {
     function huddleKeyDown(e) {
       e.key === 'Escape' && onClose();
     }
+
     window.addEventListener('keydown', huddleKeyDown);
     document.documentElement.style.overflow = 'hidden';
     return () => {
