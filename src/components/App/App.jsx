@@ -14,7 +14,6 @@ import { searchPicture } from 'components/api/api';
 const Status = {
   IDLE: 'idle',
   PENDING: 'pending',
-  LOADING: 'loading',
   RESOLVED: 'resolved',
   COMPLETED: 'completed',
   REJECTED: 'rejected',
@@ -60,27 +59,17 @@ const App = () => {
     setSearchRequest(input);
     setImages([]);
     setPage(1);
-    setStatus(Status.LOADING);
     maxPage.current = 0;
   };
 
   return (
     <Sections>
       <Searchbar enterNewSearchValue={setNewRequestValue} />
-      {status === Status.LOADING && <Loader />}
+      {images.length > 0 && <ImageGallery images={images} />}
+      {status === Status.PENDING && <Loader />}
       {status === Status.RESOLVED && (
-        <>
-          <ImageGallery images={images} />
-          <LoadMoreBtn huddlerCLick={() => setPage(prevPage => prevPage + 1)} />
-        </>
+        <LoadMoreBtn huddlerCLick={() => setPage(prevPage => prevPage + 1)} />
       )}
-      {status === status.PENDING && (
-        <>
-          <ImageGallery images={images} />
-          <Loader />
-        </>
-      )}
-      {status === Status.COMPLETED && <ImageGallery images={images} />}
       <ToastContainer theme="colored" />
     </Sections>
   );

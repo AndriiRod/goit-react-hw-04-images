@@ -1,6 +1,6 @@
 import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 import Modal from 'components/Modal/Modal';
 
@@ -8,9 +8,9 @@ const ImageGalleryItem = ({ otherProperties }) => {
   const [showModal, setShowModal] = useState(false);
   const { tags, webformatURL, largeImageURL } = otherProperties;
 
-  const toggleModal = () => {
+  const toggleModal = useCallback(() => {
     setShowModal(prevShowModal => !prevShowModal);
-  };
+  }, []);
 
   return (
     <GalleryItem>
